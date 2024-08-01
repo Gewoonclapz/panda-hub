@@ -1,0 +1,85 @@
+-- Replace `GROUP_ID` with the actual group ID you want to use for whitelisting
+local GROUP_ID = 34636855
+local validKey = "Gewoonclapz"
+
+local players = game:GetService("Players")
+local localPlayer = players.LocalPlayer
+
+if not localPlayer:IsInGroup(34636855) then
+    warn("You are not whitelisted to use this script.")
+    return
+end
+
+-- Function to verify the key
+local function Gewoonclapz(inputKey)
+    return inputKey == validKey
+end
+
+-- UI Library
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("PANDA HUB", "GrapeTheme")
+
+-- Key System Tab
+local KeyTab = Window:NewTab("Key System")
+local KeySection = KeyTab:NewSection("Enter Key")
+
+KeySection:NewTextBox("Key:", "Enter your key here", function(inputKey)
+    if verifyKey(inputKey) then
+        -- Proceed with the rest of the script if the key is valid
+
+        -- ADMIN
+        local Admin = Window:NewTab("Admin")
+        local AdminSection = Admin:NewSection("Admin")
+
+        AdminSection:NewButton("Admin Menu", "gives you an admin menu", function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/KxGOATESQUE/SilentRivals/main/SilentRivals"))()
+        end)
+
+        AdminSection:NewButton("Infinite Yield", "gives you all commands", function()
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+        end)
+
+        AdminSection:NewTextBox("TP to Spelernaam:", "TP Naar een Speler", function(targetUsername)
+            local targetPlayer = players:FindFirstChild(targetUsername)
+            if targetPlayer then
+                players.LocalPlayer.Character:MoveTo(targetPlayer.Character.HumanoidRootPart.Position)
+            else
+                warn("Speler niet gevonden.")
+            end
+        end)
+
+        AdminSection:NewButton("Rejoin game", "made by clapz", function()
+            game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
+        end)
+
+        -- Sloks Roleplay
+        local Sloks = Window:NewTab("Sloks")
+        local Section = Sloks:NewSection("Sloks")
+         
+        Section:NewButton("Spawn Alle Wapens", "Spawn je wapens in!", function()
+            loadstring(game:HttpGet(('https://raw.githubusercontent.com/CriminalMM/gg/main/we'), true))()
+        end)
+         
+        Section:NewButton("Spawn Alle Tools voor een overval", "Spawn je Tools in", function()
+            local args = { [1] = "Change", [2] = "Laptop", [3] = "Inv" } 
+            game:GetService("ReplicatedStorage").Inventory:FireServer(unpack(args))
+            args = { [1] = "Change", [2] = "Kluis Pasje", [3] = "Inv" } 
+            game:GetService("ReplicatedStorage").Inventory:FireServer(unpack(args))
+        end)
+
+        -- Aimbot
+        local Aimbot = Window:NewTab("Aimbot")
+        local Section2 = Aimbot:NewSection("Aimbot")
+         
+        Section2:NewButton("Aimbot/esp", "aimbot test", function()
+            loadstring(game:HttpGet(('https://dpaste.com/3Z6G8Q7BN.txt'), true))()
+        end)
+        
+        -- Notify the user that the key is valid and they have access
+        Library:Notify("Key Valid", "Access Granted")
+
+    else
+        warn("Invalid key.")
+        Library:Notify("Invalid Key", "Please enter a valid key.")
+    end
+end)
